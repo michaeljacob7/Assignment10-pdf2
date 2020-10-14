@@ -2,12 +2,12 @@
 
 echo "Welcome to Flip Coin Simulation"
 
-HEAD=0
+isHead=0
 #headCount=0
 #tailCount=0
 NUMBER_OF_COIN=2
 
-declare -A singleFlip
+declare -A tripletFlip
 read -p "Enter the number of coin flip: " flip
 
 #for(( count=0; count<$flip; count++ ))
@@ -28,13 +28,42 @@ read -p "Enter the number of coin flip: " flip
 #echo "Single head percentage and head count:$headCount : " $singletHeadPercentage
 #echo "Single tail percentage and tail count:$tailCount : " $singletTailPercentage
 
-function doublet()
+#function doublet()
+#{
+#	for(( count=0; count<$flip; count++))
+#	do
+#		for(( countCoin=0; countCoin<$NUMBER_OF_COIN; countCoin++ ))
+#		do
+#			flipCoin=$(( RANDOM % 2))
+#			if [ $flipCoin -eq $isHead ]
+#			then
+#				coinSide+=H
+#			else
+#				coinSide+=T
+#			fi
+#		done
+#		((doubletFlip[$coinSide]++))
+#		coinSide=""
+#	done
+#}
+#function totalDoubletPercentage()
+#{
+#	for index in {!doubletFlip[@]}
+#	do
+#		doubleFlip[$index]=`echo "scale=2; ${doubleFlip[$index]} * 100 / $flip" | bc
+#	done
+#}
+
+#doublet
+#totalDoubletPercentage
+
+function triplet()
 {
-	for(( count=0; count<$flip; count++))
+	for(( count=0; count<$flip; count++ ))
 	do
 		for(( countCoin=0; countCoin<$NUMBER_OF_COIN; countCoin++ ))
 		do
-			flipCoin=$(( RANDOM % 2))
+			flipCoin=$(( RANDOM % 2 ))
 			if [ $flipCoin -eq $isHead ]
 			then
 				coinSide+=H
@@ -42,17 +71,17 @@ function doublet()
 				coinSide+=T
 			fi
 		done
-		((doubletFlip[$coinSide]++))
+		((tripletFlip[$coinSide]++))
 		coinSide=""
 	done
 }
-function totalDoubletPercentage()
+
+function totalTripletPercentage()
 {
-	for index in {!doubletFlip[@]}
+	for index in ${!tripletFlip[@]}
 	do
-		doubleFlip[$index]=`echo "scale=2; ${doubleFlip[$index]} * 100 / $flip" | bc
+		tripletFlip[$index]=`echo "scale=2; ${tripletFlip[$index]} * 100 / $flip" | bc`
 	done
 }
-
-doublet
-totalDoubletPercentage
+triplet
+totalTripletPercentage
